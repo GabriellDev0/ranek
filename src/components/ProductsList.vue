@@ -10,26 +10,43 @@
 
               <p>{{product.description}}</p>
            </div> 
+     
     </section>
 </template>
 
 <script>
 import { api } from "@/services.js";
+import { serialize } from "@/helpers.js"
+
 export default {
     name: "ProductsList",
     data(){
         return{
-            products: null
+            products: null,
+            productsByPage: 9,
+        }
+     },
+    computed:{
+        url(){
+            
+            const query = serialize(this.$route.query)
+             //&q=Globo&teste=oi
+            return `/product?_limit=${this.productsByPage}${query}`
         }
     },
     methods: {
         getProducts(){
 
-            api.get("/product").then(response =>{
+            api.get(this.url).then(response =>{
                 this.products = response.data;
             })
 
             
+        }
+    },
+    watch:{
+        url(){
+            this.getProducts();
         }
     },
     created(){
