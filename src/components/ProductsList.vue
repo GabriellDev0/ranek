@@ -1,7 +1,7 @@
 <template>
     <section class="products-container">
         <div v-if="products && products.length" class="products">
-            <div class="product" v-for="product in products" :key="product.id">
+            <div class="product" v-for="(product, index) in products" :key="index">
                 <router-link to="/">           
                         <img v-if="product.photos" :src="product.photos[0].src" :alt="product.photos[0].title">
 
@@ -12,6 +12,10 @@
                         <p>{{product.description}}</p>
                 </router-link>       
             </div>
+            <ProductsByPage 
+                :productsTotal ="productsTotal" 
+                :productsByPage="productsByPage"
+            />
         </div>
           <div v-else-if="products && products.length === 0">
             <p class="no-results">Busca sem resultados.</p>
@@ -21,6 +25,7 @@
 </template>
 
 <script>
+import ProductsByPage from "@/components/ProductsByPage.vue"
 import { api } from "@/services.js";
 import { serialize } from "@/helpers.js"
 
@@ -29,8 +34,12 @@ export default {
     data(){
         return{
             products: null,
-            productsByPage: 9,
+            productsByPage: 3,
+            productsTotal: 0,
         }
+     },
+     components:{
+         ProductsByPage
      },
     computed:{
         url(){
@@ -44,6 +53,7 @@ export default {
         getProducts(){
 
             api.get(this.url).then(response =>{
+                this.productsTotal = Number(response.headers["x-total-count"])
                 this.products = response.data;
             })
 
