@@ -34,7 +34,7 @@ export default {
     data(){
         return{
             products: null,
-            productsByPage: 3,
+            productsByPage: 4,
             productsTotal: 0,
         }
      },

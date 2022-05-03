@@ -17,7 +17,7 @@ export default {
         searchProducts(){
             this.$router.push({query: {q: this.search}})
         }
-    }
+    },
 }
 </script>
 

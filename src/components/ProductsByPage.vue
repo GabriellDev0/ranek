@@ -2,7 +2,10 @@
    
             <ul v-if="totalPages > 1">
                 <li v-for="page in totalPages" :key="page">
-                    <router-link :to="{query: query(page)}">{{page}}</router-link>
+                    <router-link 
+                        :class="{currentActive: $route.query._page == page}" 
+                        :to="{query: query(page)}"
+                    >{{page}}</router-link>
                 </li>
             </ul>
 </template>
@@ -29,9 +32,9 @@ export default {
     },
     computed:{
         totalPages(){
-            console.log(this.$route.query)
+            console.log(this.$route.query._page)
             const total = this.productsTotal / this.productsByPage
-
+        
             return (total !== Infinity) ? Math.ceil(total) : 0;
         }
     }
@@ -51,9 +54,9 @@ li a{
     margin: 4px;
 
 }
-li a.router-link-exact-active,
+li a.router-link-exact-active.currentActive,
 li a:hover{
-    background: #87f;
+    background: #87f;   
     color: #fff;
 }
 </style>
