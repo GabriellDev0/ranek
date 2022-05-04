@@ -34,7 +34,8 @@ form{
 }
 
 #search:focus,
-#busca:hover{
+#busca:hover,
+#magnifier:hover{
     transform: scale(1.1);
 }
 
