@@ -1,6 +1,7 @@
 <template>
     <section class="products-container">
-        <div v-if="products && products.length" class="products">
+     <transition mode="out-in">
+        <div v-if="products && products.length" class="products" key="products">
             <div class="product" v-for="(product, index) in products" :key="index">
                 <router-link to="/">           
                         <img v-if="product.photos" :src="product.photos[0].src" :alt="product.photos[0].title">
@@ -17,10 +18,11 @@
                 :productsByPage="productsByPage"
             />
         </div>
-          <div v-else-if="products && products.length === 0">
+          <div v-else-if="products && products.length === 0" key="no-results">
             <p class="no-results">Busca sem resultados.</p>
-         </div>
-        
+         </div>   
+            <PageLoading v-else key="loading"/>
+     </transition>   
     </section>
 </template>
 
@@ -34,7 +36,7 @@ export default {
     data(){
         return{
             products: null,
-            productsByPage: 3,
+            productsByPage: 9,
             productsTotal: 0,
         }
      },
@@ -51,13 +53,13 @@ export default {
     },
     methods: {
         getProducts(){
-
-            api.get(this.url).then(response =>{
-                this.productsTotal = Number(response.headers["x-total-count"])
-                this.products = response.data;
-            })
-
-            
+            this.products = null;
+            setTimeout(()=>{
+                api.get(this.url).then(response =>{
+                    this.productsTotal = Number(response.headers["x-total-count"])
+                    this.products = response.data;
+                })
+            },1500)       
         }
     },
     watch:{
