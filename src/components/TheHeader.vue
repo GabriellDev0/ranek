@@ -4,15 +4,22 @@
             <router-link :to="{name: 'home'}" class="logo">
                 <img src="@/assets/ranek.svg" alt="Logo da empresa, cujo é uma escrita com uma font diferenciada chamada Ranked">
             </router-link>
-            <a href="" class="btn">Vender / Login</a>
-            <!-- :to="{name: 'login'}" -->
+            <router-link class="btn" v-if="$store.state.login" :to="{name: 'user'}">
+                {{name}}
+            </router-link>
+           <router-link v-else :to="{name: 'login'}" class="btn">Vender / Login</router-link>
         </nav>
     </header>
 </template>
 
 <script>
 export default {
-    name: "TheHeader"
+    name: "TheHeader",
+    computed:{
+        name(){
+            return this.$store.state.user.name.replace(/ .*/, "")
+        }
+    }
 }
 </script>
 
