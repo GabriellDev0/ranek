@@ -32,7 +32,7 @@ export default {
         getProduct(){
             api.get(`/product/${this.id}`).then(response =>{
                 this.product = response.data
-            })
+            }) 
         }
     },
     created(){

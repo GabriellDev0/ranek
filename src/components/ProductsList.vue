@@ -3,7 +3,7 @@
      <transition mode="out-in">
         <div v-if="products && products.length" class="products" key="products">
             <div class="product" v-for="(product, index) in products" :key="index">
-                <router-link :to="{name: 'product', params:{id: product.id}}">           
+                <router-link :to="{name: 'product', params:{id: product.id} }">           
                         <img v-if="product.photos" :src="product.photos[0].src" :alt="product.photos[0].title">
 
                         <p class="price">{{$filters.numPrice(product.price)}}</p>
@@ -59,7 +59,7 @@ export default {
                     this.productsTotal = Number(response.headers["x-total-count"])
                     this.products = response.data;
                 })
-            },1500)       
+            },1500)   
         }
     },
     watch:{

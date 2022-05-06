@@ -24,7 +24,9 @@ export default createStore({
       state.login = payload
     },
     UPDATE_USER(state, payload){
-      state.user = payload
+      //Object.assign, combina pra mim o objeto que já tenho do user com o payload que está sendo enviado,
+      //se a propriedade já existir, altera só o valor, se não existir, acrescenta lá pra mim.
+      state.user = Object.assign(state.user,payload)
     }
   },
   actions: {

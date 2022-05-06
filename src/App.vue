@@ -8,7 +8,6 @@
                       <component :is="Component" />
                   </transition>
               </router-view>
-            
           </main>
        <TheFooter/>
  
@@ -93,7 +92,7 @@ label{
 
 input, textarea{
   border-radius: 4px;
-  border: 1px solid white;
+  border: 1px solid rgb(224, 219, 219);
   padding: 15px;
   box-shadow: rgba(30,60,90,0.1);
   transition: all .3s;
