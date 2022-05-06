@@ -19,7 +19,7 @@ export function mapFields(options) {
           this.$store.commit(options.mutation, { [field]: value });
         }
       };
-    }
+    } 
     return object;
   }
   

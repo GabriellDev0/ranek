@@ -10,7 +10,7 @@
         <input id="password" name="password" type="text" v-model="password">
 
         <label for="cep">Cep</label>
-        <input id="cep" name="cep" type="text" v-model="cep">
+        <input id="cep" name="cep" type="text" @keyup="fillCep" v-model="cep">
 
         <label for="street">Rua</label>
         <input id="street" name="street" type="text" v-model="street">
@@ -34,6 +34,7 @@
 
 <script>
 import { mapFields } from "@/helpers.js"
+import { getCep } from "@/services.js"
 export default {
     name: "UserForm",
     computed:{
@@ -42,6 +43,19 @@ export default {
             base: "user",
             mutation: 'UPDATE_USER'
         })
+    },
+    methods:{
+        fillCep(){
+            const cep = this.cep.replace(/\D/g, "");
+            if(cep.length === 8){
+                getCep(cep).then(response =>{
+                    this.street = response.data.logradouro;
+                    this.district = response.data.bairro;
+                    this.state = response.data.uf;
+                    this.city = response.data.localidade;
+                })
+            }
+        }
     }
 }
 </script>
