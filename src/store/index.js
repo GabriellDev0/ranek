@@ -8,6 +8,7 @@ export default createStore({
     user: {
       id: "",
       name: "",
+      email: "",
       password: "",
       cep: "",
       street: "",
@@ -31,10 +32,29 @@ export default createStore({
   },
   actions: {
     getUser(context, payload){
-      api.get(`/user/${payload}`).then(response =>{
+     return api.get(`/user/${payload}`).then(response =>{
           context.commit("UPDATE_USER", response.data)
           context.commit("UPDATE_LOGIN", true)
       })
+    },
+    createUser(context, payload){
+      context.commit("UPDATE_USER", {id: payload.email})
+     return api.post("/user", payload)
+    },
+    logOut(context){
+      context.commit("UPDATE_USER",{
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        cep: "",
+        street: "",
+        number: "",
+        district: "",
+        city: "",
+        state: ""
+      });
+      context.commit("UPDATE_LOGIN", false)
     }
   },
   modules: {
