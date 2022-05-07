@@ -16,7 +16,8 @@ export default createStore({
       district: "",
       city: "",
       state: ""
-    }
+    },
+    user_products: null
   },
   getters: {
   },
@@ -28,9 +29,21 @@ export default createStore({
       //Object.assign, combina pra mim o objeto que já tenho do user com o payload que está sendo enviado,
       //se a propriedade já existir, altera só o valor, se não existir, acrescenta lá pra mim.
       state.user = Object.assign(state.user,payload)
+    },
+    UPDATE_USER_PRODUCTS(state, payload){
+      state.user_products = payload
+    },
+    ADD_USER_PRODUCTS(state, payload){
+      state.user_products.unshift(payload)
     }
   },
   actions: {
+    getUserProducts(context){
+      api.get(`/product?user_id=${context.state.user.id}`)
+      .then(response =>{
+        context.commit("UPDATE_USER_PRODUCTS", response.data)
+      })
+    },
     getUser(context, payload){
      return api.get(`/user/${payload}`).then(response =>{
           context.commit("UPDATE_USER", response.data)
