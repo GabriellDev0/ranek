@@ -32,7 +32,8 @@ export default {
                 user_id:"",
                 price: "",
                 description: "",
-                photos: null
+                photos: null,
+                sold: "false"
             }
         }
     },

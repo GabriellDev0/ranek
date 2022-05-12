@@ -1,5 +1,6 @@
 <template>
     <form>
+       <div class="user" v-if="showDataLogin">
         <label for="name">Nome</label>
         <input id="name" name="name" type="text" v-model="name">
 
@@ -8,7 +9,8 @@
 
         <label for="password">Senha</label>
         <input id="password" name="password" type="text" v-model="password">
-
+       </div> 
+        
         <label for="cep">Cep</label>
         <input id="cep" name="cep" type="text" @keyup="fillCep" v-model="cep">
 
@@ -42,7 +44,10 @@ export default {
             fields: ['name', 'email', 'password', 'street', 'cep', 'number', 'district', 'city', 'state'],
             base: "user",
             mutation: 'UPDATE_USER'
-        })
+        }),
+        showDataLogin(){
+            return !this.$store.state.login || this.$route.name === 'user-edit'
+        }
     },
     methods:{
         fillCep(){
@@ -61,10 +66,15 @@ export default {
 </script>
 
 <style scoped>
-form{
+form,
+.user{
     display: grid;
     grid-template-columns: 80px 1fr;
     align-items: center;
+}
+
+.user{
+    grid-column: 1 / 3;
 }
 
 .button{

@@ -10,7 +10,10 @@
                 <h1>{{product.name}}</h1>
                 <p class="price">{{$filters.numPrice(product.price)}}</p>
                 <p class="description">{{product.description}}</p>
-                <button class="btn" v-if="product.sold === 'false'">Comprar</button>
+                    <transition mode="out-in" v-if="product.sold === 'false'">
+                        <button class="btn" v-if="!finalize" @click="finalize = true">Comprar</button>
+                        <ProductCheckout v-else :product="product"/>
+                    </transition>
                 <button class="btn" v-else disabled>Produto Vendido</button>
             </div>
         </div>
@@ -20,12 +23,17 @@
 
 <script>
 import { api } from "@/services.js";
+import ProductCheckout from "@/components/ProductCheckout.vue"
 export default {
     name: "ProductView",
     props: ["id"],
+    components:{
+        ProductCheckout
+    },
     data(){
         return{
-            product: null
+            product: null,
+            finalize: false,
         }
     },
     methods:{
